@@ -1,11 +1,4 @@
 
-// Vercel serverless function: receives LINK FLAM applications and sends them to Brevo.
-// Environment variables must be configured in Vercel, never in GitHub:
-// BREVO_API_KEY
-// ADMIN_EMAIL
-// SENDER_EMAIL
-// BREVO_LIST_ID (optional)
-
 const esc = s =>
   String(s ?? "").replace(/[&<>"']/g, c => ({
     "&": "&amp;",
@@ -109,7 +102,96 @@ function formatDate(value) {
   }).format(date);
 }
 
-// Build the premium LINK office notification.
+// Shared premium LINK email header and footer.
+function emailHeader(subtitle) {
+  return `
+    <tr>
+      <td align="center" style="
+        padding:38px 24px 34px;
+        background:#2a0c0c;
+      ">
+        <div style="
+          font-family:Georgia,'Times New Roman',serif;
+          font-size:25px;
+          letter-spacing:9px;
+          color:#d4af37;
+        ">LINK</div>
+
+        <div style="
+          width:48px;height:2px;
+          background:#d4af37;
+          margin:19px auto;
+        "></div>
+
+        <div style="
+          font-family:Georgia,'Times New Roman',serif;
+          font-size:30px;
+          line-height:1.25;
+          color:#f4ead8;
+        ">Be the change.</div>
+
+        <div style="
+          margin-top:10px;
+          color:#c9b99f;
+          font-size:13px;
+          letter-spacing:1px;
+        ">${subtitle}</div>
+      </td>
+    </tr>
+    <tr><td style="height:3px;background:#d4af37;"></td></tr>
+  `;
+}
+
+function emailFooter() {
+  return `
+    <tr>
+      <td align="center" style="
+        padding:27px 20px;
+        background:#2a0c0c;
+      ">
+        <div style="
+          color:#d4af37;
+          font-family:Georgia,'Times New Roman',serif;
+          font-size:19px;
+          letter-spacing:5px;
+        ">LINK</div>
+
+        <p style="
+          margin:13px 0;
+          color:#f4ead8;
+          font-size:12px;
+          letter-spacing:1px;
+        ">CONNECT. GROW. MOVE FORWARD.</p>
+
+        <div style="
+          width:40px;height:1px;
+          background:#d4af37;
+          margin:15px auto;
+        "></div>
+
+        <p style="
+          margin:0;
+          color:#c9b99f;
+          font-size:11px;
+          line-height:1.8;
+        ">
+          GET LINK (PTY) LTD<br>
+          Independent professionals. Connected opportunities.<br>
+          SECURE. SAFE. SWIFT.
+        </p>
+
+        <p style="margin:14px 0 0;font-size:11px;">
+          <a href="https://www.getlinked.co.za/about/contact"
+             style="color:#d4af37;text-decoration:underline;">
+            Contact LINK
+          </a>
+        </p>
+      </td>
+    </tr>
+  `;
+}
+
+// 1. Office notification email.
 function buildAdminEmail(d) {
   const usedKeys = new Set(["submittedAt"]);
 
@@ -129,9 +211,8 @@ function buildAdminEmail(d) {
               font-size:13px;
               font-weight:600;
               border-bottom:1px solid #e9dfd0;
-            ">
-              ${esc(labels[key] || key)}
-            </td>
+            ">${esc(labels[key] || key)}</td>
+
             <td style="
               padding:12px 14px;
               vertical-align:top;
@@ -140,9 +221,7 @@ function buildAdminEmail(d) {
               line-height:1.7;
               border-bottom:1px solid #e9dfd0;
               word-break:break-word;
-            ">
-              ${formatValue(d[key])}
-            </td>
+            ">${formatValue(d[key])}</td>
           </tr>
         `;
       }).join("");
@@ -153,8 +232,7 @@ function buildAdminEmail(d) {
       <table role="presentation" width="100%" cellpadding="0"
         cellspacing="0" border="0"
         style="margin:0 0 22px;border-collapse:collapse;
-        background:#fffdf8;border:1px solid #e9dfd0;
-        border-radius:8px;overflow:hidden;">
+        background:#fffdf8;border:1px solid #e9dfd0;">
 
         <tr>
           <td colspan="2" style="
@@ -163,10 +241,7 @@ function buildAdminEmail(d) {
             color:#d4af37;
             font-family:Georgia,serif;
             font-size:18px;
-            letter-spacing:.3px;
-          ">
-            ${esc(section.title)}
-          </td>
+          ">${esc(section.title)}</td>
         </tr>
 
         ${rows}
@@ -174,7 +249,7 @@ function buildAdminEmail(d) {
     `;
   }).join("");
 
-  // Preserve any additional fields added to the form in future.
+  // Include any additional fields added to the form in future.
   const extraRows = Object.entries(d)
     .filter(([key]) => !usedKeys.has(key))
     .map(([key, value]) => `
@@ -217,21 +292,15 @@ function buildAdminEmail(d) {
     <title>New LINK FLAM Application</title>
   </head>
 
-  <body style="
-    margin:0;padding:0;
-    background:#f0e8dc;
-    font-family:Arial,Helvetica,sans-serif;
-    color:#382a24;
-  ">
+  <body style="margin:0;padding:0;background:#f0e8dc;
+    font-family:Arial,Helvetica,sans-serif;color:#382a24;">
 
-    <!-- Hidden inbox preview -->
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
       A new professional has applied to join the LINK network.
     </div>
 
     <table role="presentation" width="100%" cellpadding="0"
       cellspacing="0" border="0" style="background:#f0e8dc;">
-
       <tr>
         <td align="center" style="padding:28px 12px;">
 
@@ -240,85 +309,25 @@ function buildAdminEmail(d) {
             style="max-width:680px;background:#f9f5ed;
             border:1px solid #d8c8ad;">
 
-            <!-- HEADER -->
-            <tr>
-              <td align="center" style="
-                padding:38px 24px 34px;
-                background:#2a0c0c;
-              ">
+            ${emailHeader("LINK FLAM · PROFESSIONAL NETWORK")}
 
-                <div style="
-                  font-family:Georgia,'Times New Roman',serif;
-                  font-size:25px;
-                  letter-spacing:9px;
-                  color:#d4af37;
-                ">
-                  LINK
-                </div>
-
-                <div style="
-                  width:48px;height:2px;
-                  background:#d4af37;
-                  margin:19px auto;
-                "></div>
-
-                <div style="
-                  font-family:Georgia,'Times New Roman',serif;
-                  font-size:30px;
-                  line-height:1.25;
-                  color:#f4ead8;
-                ">
-                  A new connection.
-                </div>
-
-                <div style="
-                  margin-top:10px;
-                  color:#c9b99f;
-                  font-size:13px;
-                  letter-spacing:1px;
-                ">
-                  LINK FLAM · PROFESSIONAL NETWORK
-                </div>
-
-              </td>
-            </tr>
-
-            <!-- GOLD ACCENT -->
-            <tr>
-              <td style="height:3px;background:#d4af37;"></td>
-            </tr>
-
-            <!-- INTRODUCTION -->
             <tr>
               <td style="padding:32px 28px 22px;">
 
-                <div style="
-                  color:#1b7b61;
-                  font-size:11px;
-                  font-weight:bold;
-                  letter-spacing:2px;
-                  text-transform:uppercase;
-                ">
+                <div style="color:#1b7b61;font-size:11px;
+                  font-weight:bold;letter-spacing:2px;">
                   NEW APPLICATION RECEIVED
                 </div>
 
-                <h1 style="
-                  margin:10px 0;
+                <h1 style="margin:10px 0;
                   font-family:Georgia,'Times New Roman',serif;
-                  font-size:28px;
-                  font-weight:normal;
-                  color:#7b1c1c;
-                  line-height:1.3;
-                ">
+                  font-size:28px;font-weight:normal;
+                  color:#7b1c1c;line-height:1.3;">
                   ${esc(d.name)}
                 </h1>
 
-                <p style="
-                  margin:0;
-                  color:#806f60;
-                  font-size:14px;
-                  line-height:1.8;
-                ">
+                <p style="margin:0;color:#806f60;
+                  font-size:14px;line-height:1.8;">
                   A new professional has submitted an application
                   to join the LINK network. Their information is
                   presented below for review.
@@ -329,20 +338,12 @@ function buildAdminEmail(d) {
                   style="margin-top:22px;background:#eee5d5;">
                   <tr>
                     <td style="padding:15px 17px;">
-                      <div style="
-                        color:#806f60;
-                        font-size:11px;
-                        letter-spacing:1px;
-                        text-transform:uppercase;
-                      ">
+                      <div style="color:#806f60;font-size:11px;
+                        letter-spacing:1px;">
                         APPLICATION RECEIVED
                       </div>
-                      <div style="
-                        margin-top:5px;
-                        color:#3a1212;
-                        font-size:14px;
-                        font-weight:bold;
-                      ">
+                      <div style="margin-top:5px;color:#3a1212;
+                        font-size:14px;font-weight:bold;">
                         ${esc(formatDate(d.submittedAt))}
                         <span style="font-weight:normal;">
                           · South African time
@@ -355,7 +356,6 @@ function buildAdminEmail(d) {
               </td>
             </tr>
 
-            <!-- APPLICATION DETAILS -->
             <tr>
               <td style="padding:8px 28px 20px;">
                 ${sectionHtml}
@@ -363,90 +363,159 @@ function buildAdminEmail(d) {
               </td>
             </tr>
 
-            <!-- ACTION -->
             <tr>
               <td align="center" style="padding:8px 28px 35px;">
-
                 <a href="mailto:${esc(d.email)}"
-                  style="
-                    display:inline-block;
-                    padding:14px 28px;
-                    background:#7b1c1c;
-                    color:#f4ead8;
-                    text-decoration:none;
-                    font-size:13px;
-                    font-weight:bold;
-                    letter-spacing:.5px;
-                    border:1px solid #d4af37;
-                  ">
+                  style="display:inline-block;padding:14px 28px;
+                  background:#7b1c1c;color:#f4ead8;
+                  text-decoration:none;font-size:13px;
+                  font-weight:bold;letter-spacing:.5px;
+                  border:1px solid #d4af37;">
                   REPLY TO APPLICANT
                 </a>
 
-                <p style="
-                  margin:17px 0 0;
-                  color:#806f60;
-                  font-size:12px;
-                ">
+                <p style="margin:17px 0 0;color:#806f60;
+                  font-size:12px;">
                   Reply directly to this applicant using your email client.
                 </p>
-
               </td>
             </tr>
 
-            <!-- FOOTER -->
-            <tr>
-              <td align="center" style="
-                padding:27px 20px;
-                background:#2a0c0c;
-              ">
-
-                <div style="
-                  color:#d4af37;
-                  font-family:Georgia,'Times New Roman',serif;
-                  font-size:19px;
-                  letter-spacing:5px;
-                ">
-                  LINK
-                </div>
-
-                <p style="
-                  margin:13px 0;
-                  color:#f4ead8;
-                  font-size:12px;
-                  letter-spacing:1px;
-                ">
-                  CONNECT. GROW. MOVE FORWARD.
-                </p>
-
-                <div style="
-                  width:40px;height:1px;
-                  background:#d4af37;
-                  margin:15px auto;
-                "></div>
-
-                <p style="
-                  margin:0;
-                  color:#c9b99f;
-                  font-size:11px;
-                  line-height:1.8;
-                ">
-                  LINK (PTY) LTD<br>
-                  Independent professionals. Connected opportunities.<br>
-                  SECURE. SAFE. SWIFT.
-                </p>
-
-              </td>
-            </tr>
+            ${emailFooter()}
 
           </table>
 
-          <p style="
-            margin:18px 0 0;
-            color:#806f60;
-            font-size:10px;
-            text-align:center;
-          ">
+          <p style="margin:18px 0 0;color:#806f60;
+            font-size:10px;text-align:center;">
             Automated notification · LINK FLAM
+          </p>
+
+        </td>
+      </tr>
+    </table>
+  </body>
+  </html>
+  `;
+}
+
+// 2. Applicant welcome email.
+// Same visual identity, original welcome message preserved.
+function buildApplicantEmail(first) {
+  return `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Welcome to LINK</title>
+  </head>
+
+  <body style="margin:0;padding:0;background:#f0e8dc;
+    font-family:Arial,Helvetica,sans-serif;color:#382a24;">
+
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+      Your application has been received. Welcome to LINK.
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0"
+      cellspacing="0" border="0" style="background:#f0e8dc;">
+      <tr>
+        <td align="center" style="padding:28px 12px;">
+
+          <table role="presentation" width="100%" cellpadding="0"
+            cellspacing="0" border="0"
+            style="max-width:620px;background:#f9f5ed;
+            border:1px solid #d8c8ad;">
+
+            ${emailHeader("PROFESSIONAL NETWORK")}
+
+            <tr>
+              <td style="padding:36px 30px 18px;">
+
+                <div style="color:#1b7b61;font-size:11px;
+                  font-weight:bold;letter-spacing:2px;">
+                  APPLICATION RECEIVED
+                </div>
+
+                <h1 style="margin:12px 0 18px;
+                  font-family:Georgia,'Times New Roman',serif;
+                  font-size:32px;font-weight:normal;
+                  line-height:1.25;color:#7b1c1c;">
+                  Welcome to LINK.
+                </h1>
+
+                <p style="font-size:15px;color:#382a24;
+                  line-height:1.8;margin:0 0 18px;">
+                  Hi ${esc(first)},
+                </p>
+
+                <p style="font-size:14px;color:#55443b;
+                  line-height:1.9;margin:0 0 18px;">
+                  Thank you for applying to join LINK. We have
+                  received your details and will be in touch by
+                  your preferred method of contact.
+                </p>
+
+                <table role="presentation" width="100%"
+                  cellpadding="0" cellspacing="0"
+                  style="margin:25px 0;background:#eee5d5;
+                  border-left:3px solid #d4af37;">
+                  <tr>
+                    <td style="padding:20px 22px;">
+                      <div style="font-family:Georgia,serif;
+                        color:#7b1c1c;font-size:20px;
+                        margin-bottom:8px;">
+                        Your next chapter.
+                      </div>
+                      <p style="margin:0;color:#55443b;
+                        font-size:13px;line-height:1.8;">
+                        Your application is now with LINK.
+                        We will review your professional profile
+                        and contact you using your preferred
+                        method of communication.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size:14px;color:#55443b;
+                  line-height:1.9;margin:0 0 18px;">
+                  LINK is a marketplace platform. You operate
+                  as an independent service provider.
+                </p>
+
+                <p style="font-size:14px;color:#55443b;
+                  line-height:1.9;margin:0;">
+                  Thank you for taking the first step towards
+                  connecting with new opportunities.
+                </p>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center" style="padding:12px 25px 35px;">
+                <div style="background:#7b1c1c;padding:20px 15px;">
+                  <div style="font-family:Georgia,serif;
+                    font-size:22px;letter-spacing:2px;
+                    color:#d4af37;">
+                    CONNECT. GROW.
+                  </div>
+                  <div style="font-size:12px;letter-spacing:2px;
+                    color:#f4ead8;margin-top:7px;">
+                    MOVE FORWARD.
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            ${emailFooter()}
+
+          </table>
+
+          <p style="margin:18px 0 0;color:#806f60;
+            font-size:10px;text-align:center;">
+            An automated message from LINK FLAM.
           </p>
 
         </td>
@@ -489,7 +558,7 @@ export default async function handler(req, res) {
   const [first, ...rest] = String(d.name).trim().split(/\s+/);
 
   try {
-    // 1. Save or update applicant as a Brevo contact.
+    // 1. Save or update applicant in Brevo.
     const contact = {
       email: d.email,
       updateEnabled: true,
@@ -510,53 +579,56 @@ export default async function handler(req, res) {
       body: JSON.stringify(contact)
     });
 
-    // 2. Send the redesigned application notification to LINK.
-    const r = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        sender: {
-          name: "LINK FLAM",
-          email: sender
-        },
-        to: [{
-          email: admin
-        }],
-        replyTo: {
-          email: d.email,
-          name: d.name
-        },
-        subject: `New LINK FLAM application | ${d.name}`,
-        htmlContent: buildAdminEmail(d)
-      })
-    });
+    // 2. Send premium application notification to LINK.
+    const adminResponse = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          sender: {
+            name: "LINK FLAM",
+            email: sender
+          },
+          to: [{ email: admin }],
+          replyTo: {
+            email: d.email,
+            name: d.name
+          },
+          subject: `New LINK FLAM application | ${d.name}`,
+          htmlContent: buildAdminEmail(d)
+        })
+      }
+    );
 
-    if (!r.ok) {
+    if (!adminResponse.ok) {
       throw new Error("Brevo admin email failed");
     }
 
-    // 3. Applicant confirmation email.
-    // PRESERVED: Original welcome email design and wording.
-    await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        sender: {
-          name: "LINK",
-          email: sender
-        },
-        to: [{
-          email: d.email,
-          name: d.name
-        }],
-        subject: "Welcome to LINK",
-        htmlContent: `
-          <p>Hi ${esc(first)},</p>
-          <p>Thank you for applying to join LINK. We have received your details and will be in touch by your preferred method of contact.</p>
-          <p>LINK is a marketplace platform. You operate as an independent service provider.</p>
-        `
-      })
-    });
+    // 3. Send matching welcome email to applicant.
+    const applicantResponse = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          sender: {
+            name: "LINK",
+            email: sender
+          },
+          to: [{
+            email: d.email,
+            name: d.name
+          }],
+          subject: "Welcome to LINK",
+          htmlContent: buildApplicantEmail(first)
+        })
+      }
+    );
+
+    if (!applicantResponse.ok) {
+      throw new Error("Brevo applicant email failed");
+    }
 
     return res.status(200).json({ ok: true });
 
