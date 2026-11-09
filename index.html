@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join LINK | Professional sign-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#7b1c1c;--ink:#2a0c0c;--ink2:#3a1212;--gold:#d4af37;--green:#1b7b61;--text:#f4ead8;--muted:#c9b99f;--line:rgba(212,175,55,.28)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Manrope,system-ui,sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 50% -10%,#5a1717 0,var(--ink) 60%) fixed;line-height:1.6;min-height:100vh}
+main{max-width:720px;margin:0 auto;padding:clamp(24px,6vw,64px) 20px 80px}
+header{text-align:center;margin-bottom:36px;animation:rise 1.1s ease both}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.1rem;letter-spacing:.35em;color:var(--gold)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.1;margin:.4em 0 .3em}
+header p{color:var(--muted);max-width:52ch;margin:0 auto}
+.bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;margin:28px 0 8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#f0d77a);transition:width .7s ease}
+.crumb{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-bottom:22px}
+section{display:none;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));border-radius:18px;padding:clamp(20px,5vw,40px)}
+section.on{display:block;animation:fade .7s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h2{font-family:"Cormorant Garamond",serif;font-size:1.9rem;font-weight:600;margin:0 0 4px;color:var(--gold)}
+.sub{color:var(--muted);margin:0 0 26px;font-size:.95rem}
+.f{margin-bottom:26px}
+label,.q{display:block;font-weight:600;margin-bottom:4px}
+.q b{color:var(--gold)}
+.hint{display:block;font-size:.85rem;color:var(--muted);margin-bottom:10px}
+input[type=text],input[type=tel],input[type=email],textarea{width:100%;background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:12px;color:var(--text);font:inherit;padding:14px 16px;transition:border-color .3s,box-shadow .3s}
+textarea{min-height:120px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.18)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{position:relative;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:11px 18px;background:rgba(0,0,0,.2);color:var(--text);font:inherit;font-size:.95rem;transition:all .3s}
+.opt:hover{border-color:var(--gold)}
+.opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.opt.sel{background:var(--green);border-color:var(--green);box-shadow:0 6px 20px rgba(27,123,97,.35)}
+.opt.sel::before{content:"\2713\00a0"}
+.stat{display:block;font-size:.85rem;color:var(--gold);margin-top:10px;min-height:1.3em;opacity:0;transition:opacity .6s}
+.stat.show{opacity:1}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:var(--wine);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.88rem;cursor:pointer}
+.tag::after{content:" \00d7";color:var(--gold)}
+.err{color:#ffb4a8;font-size:.85rem;margin-top:8px;display:none}
+.f.bad .err{display:block}
+.f.bad input,.f.bad textarea{border-color:#ffb4a8}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:32px}
+button.btn{font:inherit;font-weight:600;border-radius:999px;padding:14px 30px;cursor:pointer;border:1px solid var(--gold);transition:all .3s}
+.next{background:var(--gold);color:#2a0c0c}
+.next:hover{background:#e6c250;transform:translateY(-1px)}
+.back{background:transparent;color:var(--gold)}
+.back:hover{background:rgba(212,175,55,.1)}
+.btn[disabled]{opacity:.5;cursor:wait}
+.note{font-size:.82rem;color:var(--muted);margin-top:18px}
+.done{text-align:center;padding:30px 0}
+.done h2{font-size:2.3rem}
+.hp{position:absolute;left:-9999px}
+footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:34px}
+footer a{color:var(--gold)}
+@media(max-width:520px){.opt{padding:12px 16px}.nav{flex-direction:column-reverse}.btn{width:100%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="logo">LINK</div>
+  <h1>Be the change.</h1>
+  <p>Join LINK as an independent professional. It takes about five minutes, and you can go back at any step.</p>
+</header>
+<div class="bar"><i id="pb"></i></div>
+<div class="crumb"><span id="cs"></span><span id="cp"></span></div>
+<form id="form" novalidate autocomplete="on"><div id="steps"></div>
+<input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<div class="nav"><button type="button" class="btn back" id="bk">Back</button><button type="button" class="btn next" id="nx">Continue</button></div>
+</form>
+<section id="ok" class="done"><h2>Welcome to LINK.</h2><p class="sub">Thank you. We have received your application and will contact you by your preferred method.</p></section>
+<footer>LINK (PTY) LTD acts as a platform. You are an independent service provider.<br>Your details are used only to manage your LINK profile (POPIA). <a href="mailto:hello@example.com">Contact us</a></footer>
+</main>
+
+<script>
+/* ---------- CONFIG ---------- */
+const CONFIG={
+  endpoint:"/api/submit",           // Vercel function that talks to Brevo (see api/submit.js)
+  whatsapp:"074 571 8332",
+  // REAL response counts only. Copy them from your Brevo/Google export.
+  // Percentages show only once total reaches minToShow, so early visitors never see thin numbers.
+  stats:{total:0,minToShow:10,counts:{
+    // example shape: pricing:{"Per hour":4,"Per day":3}, why:{"Growth":9,"Networking":6}
+  }}
+};
+
+/* ---------- QUESTIONS ---------- */
+const S=[
+{t:"About you",s:"This is how we, clients and partners will address you.",f:[
+ {k:"name",l:"Full name and surname",type:"text",req:1,ac:"name"},
+ {k:"phone",l:"Contact number",type:"tel",req:1,ac:"tel"},
+ {k:"email",l:"Email address",type:"email",req:1,ac:"email"},
+ {k:"city",l:"Which city do you live in?",h:"Please do not share your residential address. Stay safe.",type:"text",req:1},
+ {k:"contact",l:"Preferred method of contact",type:"one",o:["Email","WhatsApp","Call"],req:1}]},
+{t:"Your professional profile",s:"This shows how your services will be presented to clients.",f:[
+ {k:"skill",l:"Primary skill or service you offer",h:"For example: your title, your achievements, and what you want to do.",type:"text",req:1},
+ {k:"skills",l:"Additional skills (optional)",h:"Type a skill and press Enter. Tap a skill to remove it.",type:"tags"},
+ {k:"bio",l:"Brief professional bio",h:"Who you are, your experience, and what drives your work.",type:"area",req:1},
+ {k:"links",l:"Show us some of your work (optional)",h:"Website, portfolio, Facebook or other links.",type:"text"}]},
+{t:"Pricing",s:"You set your own prices. LINK does not set them for you.",f:[
+ {k:"pricing",l:"How do you prefer to price your services?",type:"one",o:["Per hour","Per day","Per project / per gig","Depends on the job"],req:1},
+ {k:"range",l:"Your typical price range (estimate)",type:"one",o:["R100 - R300","R300 - R500","R500 - R1000","R1000 - R2500","R2500+"],req:1},
+ {k:"negotiable",l:"Are you open to negotiating your rate?",type:"one",o:["Yes","No"],req:1}]},
+{t:"Availability",s:"LINK does not assign work. Your availability helps match you with suitable opportunities.",f:[
+ {k:"hours",l:"How available are you per week?",type:"one",o:["1-5 hours","6-10 hours","20-30 hours","Flexible / On-demand"],req:1},
+ {k:"weekends",l:"Are you available on weekends and public holidays?",type:"one",o:["Yes (both)","No","Weekends only","Holidays only"],req:1}]},
+{t:"Your motivation",s:"We would like to understand why you are joining.",f:[
+ {k:"why",l:"Why do you want to join LINK?",h:"Choose all that apply.",type:"many",o:["Growth","Community","Experience","Exposure","Networking","Other"],req:1},
+ {k:"contribute",l:"When LINK contacts you, what is the one thing you would be excited to contribute?",type:"area",req:1}]},
+{t:"How LINK works",s:"Please confirm that you understand the structure.",f:[
+ {k:"market",l:"Do you understand that LINK is a marketplace platform and not an employer?",type:"one",o:["Yes","No"],req:1,must:"Yes"},
+ {k:"understand",l:"Do you understand the following?",h:"Select all that apply.",type:"many",o:["I operate as an independent service provider","Work opportunities are not guaranteed","I am responsible for my own pricing and services","Clients choose whether to book my services"],req:1,all:1},
+ {k:"payment",l:"Payment structure",h:"You set your own pricing. LINK applies a service fee per booking (standard jobs). High-value bookings may include a small additional percentage fee. You receive the balance after fees, after successful service completion.",type:"one",o:["Yes, I accept","No"],req:1,must:"Yes, I accept"},
+ {k:"withhold",l:"Do you understand that LINK may delay or withhold payment in cases of disputes, incomplete work or quality concerns?",type:"one",o:["Yes","No"],req:1,must:"Yes"},
+ {k:"professional",l:"Do you agree to operate professionally and represent LINK responsibly?",type:"one",o:["Yes","No"],req:1,must:"Yes"}]},
+{t:"Equipment",s:"You are responsible for your own tools and equipment unless otherwise agreed.",f:[
+ {k:"equip",l:"Do you have the tools and equipment for your service?",type:"one",o:["Yes","No"],req:1},
+ {k:"needs",l:"If no, which tools or equipment do you need?",type:"area"}]},
+{t:"Final confirmation",s:"One last step before you join.",f:[
+ {k:"ready",l:"Are you ready to join LINK's network and take part in opportunities as they arise?",type:"one",o:["Yes","No"],req:1,must:"Yes"},
+ {k:"accurate",l:"I confirm that all information provided is accurate.",type:"one",o:["Yes","No"],req:1,must:"Yes"},
+ {k:"notes",l:"Any questions, notes or requests? (optional)",type:"area"},
+ {k:"terms",l:"I confirm that:",h:"Tick each statement to continue.",type:"many",o:["I have read and understood the Terms & Conditions","I understand LINK is a marketplace, not employment","I accept the service fee structure","I agree to operate professionally and independently","I consent to LINK storing my details to manage my profile"],req:1,all:1}]}
+];
+
+/* ---------- STATE + RENDER ---------- */
+const A={};let cur=0;
+const $=(s,r=document)=>r.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function stat(k,o){
+  const st=CONFIG.stats,c=st.counts[k];
+  if(!c||st.total<st.minToShow||c[o]==null)return"";
+  const p=Math.round(c[o]/st.total*100);
+  return p>=50?`${p}% of LINK professionals chose this.`:`${p}% of LINK professionals also chose this.`;
+}
+
+function build(){
+  const box=$("#steps");
+  S.forEach((st,i)=>{
+    const sec=el("section",i?"":"on");sec.dataset.i=i;
+    sec.append(el("h2","",esc(st.t)),el("p","sub",esc(st.s)));
+    st.f.forEach(f=>{
+      const w=el("div","f");w.dataset.k=f.k;
+      const id="f_"+f.k;
+      if(f.type==="text"||f.type==="tel"||f.type==="email"){
+        w.append(el("label","",esc(f.l)+(f.req?' <b>*</b>':"")));w.lastChild.htmlFor=id;
+        if(f.h)w.append(el("span","hint",esc(f.h)));
+        const i=el("input");i.type=f.type;i.id=id;i.name=f.k;if(f.ac)i.autocomplete=f.ac;
+        i.oninput=()=>{A[f.k]=i.value.trim();w.classList.remove("bad")};w.append(i);
+      }else if(f.type==="area"){
+        w.append(el("label","",esc(f.l)+(f.req?' <b>*</b>':"")));w.lastChild.htmlFor=id;
+        if(f.h)w.append(el("span","hint",esc(f.h)));
+        const t=el("textarea");t.id=id;t.name=f.k;t.oninput=()=>{A[f.k]=t.value.trim();w.classList.remove("bad")};w.append(t);
+      }else if(f.type==="tags"){
+        w.append(el("label","",esc(f.l)));w.lastChild.htmlFor=id;
+        w.append(el("span","hint",esc(f.h)));
+        const i=el("input");i.type="text";i.id=id;A[f.k]=[];
+        const tg=el("div","tags");
+        const draw=()=>{tg.innerHTML="";A[f.k].forEach((s,n)=>{const b=el("button","tag",esc(s));b.type="button";b.onclick=()=>{A[f.k].splice(n,1);draw()};tg.append(b)})};
+        const add=()=>{const v=i.value.replace(/,/g,"").trim();if(v&&!A[f.k].includes(v)&&A[f.k].length<15)A[f.k].push(v);i.value="";draw()};
+        i.onkeydown=e=>{if(e.key==="Enter"||e.key===","){e.preventDefault();add()}};i.onblur=add;
+        w.append(i,tg);
+      }else{
+        const many=f.type==="many";
+        w.append(el("span","q",esc(f.l)+(f.req?' <b>*</b>':"")));
+        if(f.h)w.append(el("span","hint",esc(f.h)));
+        const g=el("div","opts");g.setAttribute("role",many?"group":"radiogroup");
+        const sv=el("span","stat");sv.setAttribute("aria-live","polite");
+        if(many)A[f.k]=[];
+        f.o.forEach(o=>{
+          const b=el("button","opt",esc(o));b.type="button";
+          b.setAttribute("role",many?"checkbox":"radio");b.setAttribute("aria-checked","false");
+          b.onclick=()=>{
+            w.classList.remove("bad");
+            if(many){const a=A[f.k],n=a.indexOf(o);n<0?a.push(o):a.splice(n,1);b.classList.toggle("sel",n<0);b.setAttribute("aria-checked",n<0)}
+            else{A[f.k]=o;[...g.children].forEach(c=>{c.classList.remove("sel");c.setAttribute("aria-checked","false")});b.classList.add("sel");b.setAttribute("aria-checked","true")}
+            const m=stat(f.k,o);sv.textContent=m;sv.classList.toggle("show",!!m&&(many?A[f.k].includes(o):1));
+          };
+          g.append(b);
+        });
+        w.append(g,sv);
+      }
+      w.append(el("div","err",""));sec.append(w);
+    });
+    box.append(sec);
+  });
+}
+
+function ok(f){
+  const v=A[f.k];
+  if(!f.req)return"";
+  if(f.type==="many"){
+    if(!v.length)return"Please choose at least one option.";
+    if(f.all&&v.length<f.o.length)return"Please tick every statement to continue.";
+    return"";
+  }
+  if(!v)return"This field is required.";
+  if(f.type==="email"&&!/^\S+@\S+\.\S+$/.test(v))return"Please enter a valid email address.";
+  if(f.type==="tel"&&v.replace(/\D/g,"").length<9)return"Please enter a valid number.";
+  if(f.must&&v!==f.must)return"You need to confirm this to join LINK. Questions? WhatsApp "+CONFIG.whatsapp+".";
+  return"";
+}
+
+function validate(){
+  let first=null;
+  S[cur].f.forEach(f=>{
+    const m=ok(f),w=$(`[data-k="${f.k}"]`);
+    w.classList.toggle("bad",!!m);$(".err",w).textContent=m;
+    if(m&&!first)first=w;
+  });
+  if(first)first.scrollIntoView({behavior:"smooth",block:"center"});
+  return!first;
+}
+
+function show(n){
+  cur=n;
+  document.querySelectorAll("#steps section").forEach(s=>s.classList.toggle("on",+s.dataset.i===n));
+  $("#pb").style.width=((n+1)/S.length*100)+"%";
+  $("#cs").textContent="Step "+(n+1)+" of "+S.length;
+  $("#cp").textContent=S[n].t;
+  $("#bk").style.visibility=n?"visible":"hidden";
+  $("#nx").textContent=n===S.length-1?"Join LINK":"Continue";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function send(){
+  const b=$("#nx");b.disabled=true;b.textContent="Sending...";
+  try{
+    if($(".hp").value)return;
+    const r=await fetch(CONFIG.endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...A,submittedAt:new Date().toISOString()})});
+    if(!r.ok)throw 0;
+    $("#form").style.display="none";document.querySelector(".bar").style.display="none";document.querySelector(".crumb").style.display="none";
+    $("#ok").style.display="block";$("#ok").style.animation="fade .8s ease both";window.scrollTo({top:0,behavior:"smooth"});
+  }catch(e){
+    b.disabled=false;b.textContent="Join LINK";
+    const w=$(`[data-k="terms"]`);w.classList.add("bad");$(".err",w).textContent="We could not send your application. Please try again, or WhatsApp "+CONFIG.whatsapp+".";
+  }
+}
+
+$("#nx").onclick=()=>{if(!validate())return;cur<S.length-1?show(cur+1):send()};
+$("#bk").onclick=()=>cur&&show(cur-1);
+$("#ok").style.display="none";
+build();show(0);
+</script>
+</body>
+</html>
